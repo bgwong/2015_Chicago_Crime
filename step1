@@ -55,7 +55,8 @@ counts = table(Crime2015$Crime.Type,Crime2015$Arrest)
 barplot(counts,col=c(“darkblue”,”red”), legend=c(“TRUE”,”FALSE”),main = “Arrest by Crime.Type”)
 
 # 9.g Analyze crime by time #
-barplot(counts,col = c("red"), legend=c("total number"), main = "crime by time")
+counts = table (Crime2015$Crime.Time)
+barplot(counts,col = c("red"), legend=c("Total Number of Crime"), main = "Crime Time")
 
 
 
