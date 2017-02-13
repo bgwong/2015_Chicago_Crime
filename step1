@@ -1,0 +1,81 @@
+# 1. Read data #
+Crime2015 <-
+read.csv("~/Bilge/CKME_136_Capstone_Project/Crime2015.csv")
+
+# 2. Change column names of some key attributes #
+Names(Crime2015)[5]<-"Crime.Code"
+Names(Crime2015) [6]<-“Crime.Type”
+Names(Crime2015) [7]<-“Crime.Subcatg”
+Names(Crime2015) [8]<-“Crime.Location”
+
+# 3. Find missing values for each attribute #
+sum(is.na(Crime2015$Date)==TRUE)
+sum(is.na(Crime2015$Crime.Code)==TRUE)
+sum(is.na(Crime2015$Crime.Type)==TRUE)
+sum(is.na(Crime2015$Crime.Subcatg)==TRUE)
+sum(is.na(Crime2015$Crime.Location)==TRUE)
+
+# 4. Replace blank values with NA #
+Crime2015[Crime2015==""]<-NA
+
+# 5. Insert "Other" value for the missing crime location values #
+Crime2015$Crime.Location <- as.character(Crime2015$Crime.Location)
+Crime2015$Crime.Location[is.na(Crime2015$Crime.Location)] <- "Other"
+
+# 6. Change crime type name from "Non - Criminal" to "Non-Criminal" #
+Crime2015$Crime.Type <-as.factor(Crime2015$Crime.Type)
+Crime2015$Crime.Type[Crime2015$Crime.Type %in% "NON - CRIMINAL"] <- "NON-CRIMINAL"
+
+# 7. Calculate mean of missing Latitude and Longitute values #
+Crime2015$Latitude[is.na(Crime2015$Latitude)]<- mean(Crime2015$Latitude,na.rm = TRUE)
+Crime2015$Longitude[is.na(Crime2015$Longitude)] <- mean(Crime2015$Longitude,na.rm = TRUE)
+
+# 8. Seperate Date and Time #
+Crime2015$Crime.Date<-sapply(strsplit(as.character(Crime2015$Date)," "), "[",1)
+Crime2015$Crime.Time<-sapply(strsplit(as.character(Crime2015$Date)," "), "[",2)
+
+# 9. Visualize Data #
+# 9.a Hitogram of the crimes in community areas #
+hist(Crime2015$Community.Area,main =" Chicago Community Areas", xlab ="Area")
+
+# 9.b View interaction between Crime Type and community Area by Arrest #
+interaction.plot(Crime2015$Crime.Type,Crime2015$Arrest,Crime2015$Community.Area)
+
+# 9.c Distribution of Crime Type in a community area #
+plot(Crime2015$Crime.Type, Crime2015$Community.Area)
+
+# 9.d Distrubution of crime type in a beat #
+plot(Crime2015$Crime.Type,Crime2015$Beat, ylab="Beat", xlab="Crime Type")
+
+# 9.e Determine if arrest was happened #
+barplot(table(Crime2015$Arrest),main="Arrest Analysis")
+
+# 9.f Analyze Arrest by crime Type #
+counts = table(Crime2015$Crime.Type,Crime2015$Arrest)
+barplot(counts,col=c(“darkblue”,”red”), legend=c(“TRUE”,”FALSE”),main = “Arrest by Crime.Type”)
+
+# 9.g Analyze crime by time #
+barplot(counts,col = c("red"), legend=c("total number"), main = "crime by time")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
