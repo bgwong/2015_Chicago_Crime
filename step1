@@ -34,6 +34,15 @@ Crime2015$Longitude[is.na(Crime2015$Longitude)] <- mean(Crime2015$Longitude,na.r
 Crime2015$Crime.Date<-sapply(strsplit(as.character(Crime2015$Date)," "), "[",1)
 Crime2015$Crime.Time<-sapply(strsplit(as.character(Crime2015$Date)," "), "[",2)
 
+# 8.a Split Date into Month and Day #
+mydate <- as.POSIXct(Crime2015$crime.date,format="%m/%d/%Y")
+crime.month <- format(mydate,"%m")
+crime.day <- format(mydate,"%d")
+ 
+# 8.b Create new columns #
+Crime2015$crime.day <- format(mydate, "%d")
+Crime2015$crime.month <- format(mydate, "%m")
+  
 # 9. Visualize Data #
 # 9.a Hitogram of the crimes in community areas #
 hist(Crime2015$Community.Area,main =" Chicago Community Areas", xlab ="Area")
