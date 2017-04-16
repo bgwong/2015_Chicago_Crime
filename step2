@@ -1,0 +1,15 @@
+# 2.1 Total number of crime types occurred over the 12 monthssummary.crimetype<- summary(CrimeC2015$Crime.Type,counts = sum(Count))
+# 2.2 Total number of arrests by per month for the year of 2015  monthly_arrest <- aggregate(CrimeC2015$Arrest ~ CrimeC2015$Month, FUN = sum)
+# 2.3 Total number of arrest by time arrest_time <- aggregate(CrimeC2015$Arrest ~ CrimeC2015$Time, FUN = sum)
+# 2.4 Total number of arrests by community areaarrest_CArea<- aggregate(CrimeC2015$Arrest ~ CrimeC2015$Community.Area, FUN = sum)
+# 2.5 Total number of arrests by crime typearrest_CType<- aggregate(CrimeC2015$Arrest ~ CrimeC2015$Crime.Type, FUN = sum)
+# 2.6 The highest 5 crime typeas.matrix(sort(table(CrimeC2015$Crime.Type), decreasing = T)[1:5])
+# 2.7 The location with the highest incidentswith(CrimeC2015, sort(table(Crime.Location), decreasing = T))[1]
+# 2.8 The highest crime rate over 10 community areas (neighborhoods) in Chicago
+violent.community<-subset(CrimeC2015,Crime.Type %in% c("CRIMINAL DAMAGE","HOMICIDE"))with (violent.community,sort(table(Community.Area), decreasing = T))[1:10]
+# 2.9 If we group Violence under Criminal Damage, Robbery and Homicide, the violence has lower probabilities of arrest.
+violent.arrest<-subset(CrimeC2015,Crime.Type %in% c("CRIMINAL DAMAGE","HOMICIDE"))with (violent.arrest,sort(table(Arrest), decreasing = T))[1:2]
+# 2.10 Narcotics offences have the highest chance of a arrestnarcotics<-subset(CrimeC2015,Crime.Type %in% c("NARCOTICS"))with (narcotics,sort(table(Arrest), decreasing = T))[1:2]
+# 2.11 The month had the highest crime ratesort(table(CrimeC2015$Month), decreasing = T)[1]
+# 2.12 The time had the highest crime ratesort(table(CrimeC2015$Time), decreasing = T)[1]
+# 2.13 Total number of crimes by time  crime_time <- aggregate(CrimeC2015$Time ~ CrimeC2015$Crime.Type, FUN = sum)
